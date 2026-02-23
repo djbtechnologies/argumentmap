@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Emancipated Consumer — Argument Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f3ec; --parchment: #ede8de; --ink: #1a1610; --ink-soft: #3d3628;
+    --ink-faint: #7a6e5f; --rust: #8b3a1e; --gold: #b8922a;
+    --line: rgba(26,22,16,0.15); --line-strong: rgba(26,22,16,0.35);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--cream); color:var(--ink); font-family:'Cormorant Garamond',serif; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.5; }
+  .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:80px 40px; position:relative; border-bottom:1px solid var(--line-strong); }
+  .hero::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:1px; height:60px; background:linear-gradient(to bottom,var(--ink),transparent); }
+  .hero-eyebrow { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; color:var(--rust); margin-bottom:32px; opacity:0; animation:fadeUp 0.8s 0.2s forwards; }
+  .hero-title { font-family:'Playfair Display',serif; font-size:clamp(52px,8vw,100px); font-style:italic; line-height:0.9; color:var(--ink); margin-bottom:24px; opacity:0; animation:fadeUp 0.8s 0.4s forwards; }
+  .hero-title span { display:block; font-style:normal; font-size:clamp(18px,2.5vw,28px); letter-spacing:0.05em; color:var(--ink-faint); margin-top:16px; }
+  .hero-rule { width:80px; height:1px; background:var(--rust); margin:32px auto; opacity:0; animation:fadeUp 0.8s 0.6s forwards; }
+  .hero-claim { max-width:680px; font-size:19px; font-weight:300; line-height:1.7; color:var(--ink-soft); font-style:italic; opacity:0; animation:fadeUp 0.8s 0.8s forwards; }
+  .hero-meta { display:flex; gap:48px; margin-top:56px; opacity:0; animation:fadeUp 0.8s 1s forwards; }
+  .hero-meta-item { text-align:center; }
+  .hero-meta-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-bottom:6px; }
+  .hero-meta-value { font-size:14px; font-weight:500; color:var(--ink); }
+  .section { max-width:1400px; margin:0 auto; padding:100px 60px; }
+  .section-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--rust); margin-bottom:16px; display:flex; align-items:center; gap:16px; }
+  .section-label::before { content:''; width:32px; height:1px; background:var(--rust); display:inline-block; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(32px,4vw,52px); font-style:italic; line-height:1.1; margin-bottom:60px; color:var(--ink); }
+  .map-section { background:var(--parchment); border-top:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong); padding:80px 40px; }
+  .map-container { max-width:1300px; margin:0 auto; overflow-x:auto; }
+  #argument-svg { width:100%; min-width:900px; height:auto; display:block; }
+  .map-node { cursor:pointer; transition:all 0.2s; }
+  .map-node:hover rect { filter:drop-shadow(0 4px 12px rgba(139,58,30,0.2)); }
+  .tooltip { position:fixed; background:var(--ink); color:var(--cream); padding:14px 20px; border-radius:2px; font-size:13px; font-family:'Cormorant Garamond',serif; font-style:italic; max-width:320px; line-height:1.5; pointer-events:none; opacity:0; transition:opacity 0.2s; z-index:9999; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+  .tooltip.visible { opacity:1; }
+  .keys-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-bottom:80px; }
+  .key-card { border-top:2px solid var(--ink); padding-top:28px; }
+  .key-card-title { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:20px; }
+  .key-items { list-style:none; }
+  .key-items li { font-size:22px; font-weight:400; color:var(--ink); padding:10px 0; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:16px; }
+  .key-items li .num { font-family:'DM Mono',monospace; font-size:11px; color:var(--rust); min-width:20px; }
+  .position-block { background:var(--ink); color:var(--cream); padding:60px 80px; margin-bottom:80px; position:relative; overflow:hidden; }
+  .position-block::before { content:'"'; position:absolute; top:-20px; left:40px; font-family:'Playfair Display',serif; font-size:200px; color:rgba(255,255,255,0.04); line-height:1; pointer-events:none; }
+  .position-block .label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:24px; }
+  .position-block p { font-size:22px; font-style:italic; line-height:1.65; font-weight:300; max-width:780px; }
+  .questions-section { border-top:1px solid var(--line-strong); padding:80px 60px; max-width:1400px; margin:0 auto; }
+  .q-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; margin-top:48px; }
+  .q-card { padding:36px; border:1px solid var(--line); transition:all 0.3s; background:var(--cream); }
+  .q-card:hover { background:var(--parchment); border-color:var(--ink-faint); transform:translateY(-2px); }
+  .q-num { font-family:'DM Mono',monospace; font-size:10px; color:var(--rust); letter-spacing:0.2em; display:block; margin-bottom:16px; }
+  .q-text { font-size:17px; line-height:1.55; font-style:italic; color:var(--ink-soft); }
+  .q-section-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-faint); margin-top:48px; margin-bottom:24px; display:block; }
+  .summaries-section { background:var(--parchment); border-top:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong); padding:80px 60px; }
+  .summaries-inner { max-width:1400px; margin:0 auto; }
+  .summary-tabs { display:flex; margin-bottom:48px; border-bottom:1px solid var(--line-strong); }
+  .summary-tab { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; padding:14px 28px; cursor:pointer; color:var(--ink-faint); border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.2s; background:none; border-top:none; border-left:none; border-right:none; }
+  .summary-tab:hover { color:var(--ink); }
+  .summary-tab.active { color:var(--rust); border-bottom-color:var(--rust); }
+  .summary-panel { display:none; max-width:820px; }
+  .summary-panel.active { display:block; }
+  .summary-panel p { font-size:21px; line-height:1.75; font-style:italic; font-weight:300; color:var(--ink-soft); }
+  .concepts-section { padding:80px 60px; max-width:1400px; margin:0 auto; border-top:1px solid var(--line-strong); }
+  .concepts-full { font-size:19px; line-height:1.8; color:var(--ink-soft); font-weight:300; max-width:900px; }
+  .frames-section { background:var(--ink); color:var(--cream); padding:80px 60px; }
+  .frames-inner { max-width:1400px; margin:0 auto; }
+  .frames-section .section-label { color:var(--gold); }
+  .frames-section .section-label::before { background:var(--gold); }
+  .frames-section .section-title { color:var(--cream); }
+  .frame-item { display:grid; grid-template-columns:60px 1fr; gap:40px; padding:48px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+  .frame-item:last-child { border-bottom:none; }
+  .frame-letter { font-family:'Playfair Display',serif; font-size:64px; font-style:italic; color:rgba(184,146,42,0.4); line-height:1; margin-top:-8px; }
+  .frame-analysis { font-size:17px; line-height:1.7; color:rgba(247,243,236,0.9); font-weight:300; }
+  .importance-block { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; padding:80px 60px; max-width:1400px; margin:0 auto; border-top:1px solid var(--line-strong); }
+  .importance-block h2 { font-family:'Playfair Display',serif; font-size:38px; font-style:italic; line-height:1.2; color:var(--ink); position:sticky; top:40px; }
+  .importance-block p { font-size:20px; line-height:1.8; color:var(--ink-soft); font-weight:300; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease,transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:none; }
+  @media (max-width:900px) {
+    .keys-grid,.q-grid { grid-template-columns:1fr; }
+    .importance-block,.frame-item { grid-template-columns:1fr; }
+    .section { padding:60px 24px; }
+    .position-block { padding:40px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-eyebrow">Argument Map · Eric Topal · The Emancipated Consumer</p>
+  <h1 class="hero-title">The Emancipated<span>Consumer</span></h1>
+  <div class="hero-rule"></div>
+  <p class="hero-claim">How will the future of the doctor–patient relationship and healthcare change with the advancement of technology and access to personal medical data?</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="hero-meta-label">Author</span><span class="hero-meta-value">Eric Topal</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Key Concepts</span><span class="hero-meta-value">Autonomy · Data Ownership · Democratization</span></div>
+    <div class="hero-meta-item"><span class="hero-meta-label">Key Stakeholders</span><span class="hero-meta-value">Patients · Doctors · Corporations</span></div>
+  </div>
+</header>
+
+<section class="map-section">
+  <div style="max-width:1300px;margin:0 auto;padding:0 20px">
+    <p class="section-label">Visual Argument Map</p>
+    <h2 class="section-title" style="margin-bottom:48px">The Structure of the Argument</h2>
+  </div>
+  <div class="map-container">
+    <svg id="argument-svg" viewBox="0 0 1100 660" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#3d3628"/>
+        </marker>
+      </defs>
+
+      <!-- Source to Question -->
+      <line x1="550" y1="46" x2="550" y2="88" stroke="#3d3628" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Question to Democratization -->
+      <line x1="480" y1="158" x2="265" y2="210" stroke="#3d3628" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Question to Data Ownership -->
+      <line x1="620" y1="158" x2="835" y2="210" stroke="#3d3628" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Democratization to 3 children -->
+      <line x1="200" y1="252" x2="90"  y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="265" y1="252" x2="265" y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="330" y1="252" x2="440" y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <!-- Data Ownership to 3 children -->
+      <line x1="790" y1="252" x2="640" y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="835" y1="252" x2="815" y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="880" y1="252" x2="990" y2="298" stroke="#7a6e5f" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <!-- Claims to Quotes -->
+      <line x1="90"  y1="400" x2="90"  y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+      <line x1="265" y1="400" x2="265" y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+      <line x1="440" y1="400" x2="440" y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+      <line x1="640" y1="400" x2="640" y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+      <line x1="815" y1="400" x2="815" y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+      <line x1="990" y1="400" x2="990" y2="462" stroke="#b8a898" stroke-width="0.8" marker-end="url(#arrow)"/>
+
+      <!-- SOURCE -->
+      <g class="map-node" data-tip="The Emancipated Consumer, Eric Topol">
+        <rect x="370" y="8" width="360" height="38" rx="2" fill="#f7f3ec" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="550" y="32" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13.5" fill="#1a1610" font-weight="500">The Emancipated Consumer, Eric Topol</text>
+      </g>
+
+      <!-- OVERARCHING QUESTION -->
+      <g class="map-node" data-tip="How will the future of the doctor-patient relationship and healthcare change with the advancement of technology and access to personal medical data?">
+        <rect x="340" y="90" width="420" height="68" rx="2" fill="#f0e8d8" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="550" y="112" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="#1a1610">How will the future of the doctor-patient relationship</text>
+        <text x="550" y="128" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="#1a1610">and healthcare change with the advancement of</text>
+        <text x="550" y="144" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="11" fill="#1a1610">technology and access to personal medical data?</text>
+      </g>
+
+      <!-- DEMOCRATIZATION AND EMPOWERMENT -->
+      <g class="map-node" data-tip="Democratization and Empowerment">
+        <rect x="135" y="212" width="260" height="40" rx="2" fill="#f7f3ec" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="265" y="237" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#1a1610">Democratization and Empowerment</text>
+      </g>
+
+      <!-- DATA OWNERSHIP -->
+      <g class="map-node" data-tip="Data Ownership">
+        <rect x="710" y="212" width="250" height="40" rx="2" fill="#f7f3ec" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="835" y="237" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" fill="#1a1610">Data Ownership</text>
+      </g>
+
+      <!-- D1: Mobile smartphones -->
+      <g class="map-node" data-tip="Mobile smartphones and apps let people undergo their own medical examinations and tests.">
+        <rect x="14" y="300" width="152" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="90" y="320" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">Mobile smartphones</text>
+        <text x="90" y="335" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">and apps let people</text>
+        <text x="90" y="350" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">undergo their own</text>
+        <text x="90" y="365" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">medical examinations</text>
+        <text x="90" y="380" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">and tests.</text>
+      </g>
+
+      <!-- D2: The internet creates access -->
+      <g class="map-node" data-tip="The internet creates access to medical information and technology that gives people more authority on their own opinion instead of the doctor having all the say.">
+        <rect x="178" y="300" width="174" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="265" y="318" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">The internet creates</text>
+        <text x="265" y="333" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">access to medical</text>
+        <text x="265" y="348" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">information and technology</text>
+        <text x="265" y="363" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">that gives people more</text>
+        <text x="265" y="378" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">authority on their own</text>
+        <text x="265" y="393" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">opinion instead of the doctor.</text>
+      </g>
+
+      <!-- D3: People are now empowered -->
+      <g class="map-node" data-tip="People are now empowered to take preventative measures for their health by predicting and preventing disease.">
+        <rect x="364" y="300" width="152" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="440" y="318" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">People are now</text>
+        <text x="440" y="333" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">empowered to take</text>
+        <text x="440" y="348" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">preventative measures</text>
+        <text x="440" y="363" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">for their health by</text>
+        <text x="440" y="378" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">predicting and</text>
+        <text x="440" y="393" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">preventing disease.</text>
+      </g>
+
+      <!-- O1: People require legal ownership -->
+      <g class="map-node" data-tip="People require legal ownership of their medical records for transparency and accountability with their care.">
+        <rect x="554" y="300" width="172" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="640" y="318" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">People require legal</text>
+        <text x="640" y="333" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">ownership of their</text>
+        <text x="640" y="348" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">medical records for</text>
+        <text x="640" y="363" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">transparency and</text>
+        <text x="640" y="378" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">accountability with</text>
+        <text x="640" y="393" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">their care.</text>
+      </g>
+
+      <!-- O2: Owning medical data -->
+      <g class="map-node" data-tip="Owning medical data lets people share their personal records easily with other healthcare providers.">
+        <rect x="738" y="300" width="154" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="815" y="318" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">Owning medical data</text>
+        <text x="815" y="333" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">lets people share</text>
+        <text x="815" y="348" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">their personal records</text>
+        <text x="815" y="363" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">easily with other</text>
+        <text x="815" y="378" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">healthcare</text>
+        <text x="815" y="393" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">providers.</text>
+      </g>
+
+      <!-- O3: Personal autonomy of medical data -->
+      <g class="map-node" data-tip="Personal autonomy of medical data is vital for privacy and preventing unauthorized use of sensitive information.">
+        <rect x="904" y="300" width="172" height="98" rx="2" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="990" y="318" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">Personal autonomy of</text>
+        <text x="990" y="333" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">medical data is vital</text>
+        <text x="990" y="348" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">for privacy and</text>
+        <text x="990" y="363" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">preventing</text>
+        <text x="990" y="378" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">unauthorized use of</text>
+        <text x="990" y="393" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="10.5" fill="#1a1610">sensitive information.</text>
+      </g>
+
+      <!-- Q1: under Mobile smartphones -->
+      <g class="map-node" data-tip='"The smartphone—soon to be used by the majority of adults on the planet—is the hub of this digital medical revolution, and will increasingly serve as the portal to your medical data, a lab, and a physical exam tool" (61).'>
+        <rect x="14" y="464" width="152" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="90" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"The smartphone—soon</text>
+        <text x="90" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">to be used by the majority</text>
+        <text x="90" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">of adults on the planet—</text>
+        <text x="90" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">is the hub of this digital</text>
+        <text x="90" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">medical revolution, and will</text>
+        <text x="90" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">increasingly serve as the</text>
+        <text x="90" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">portal to your medical data,</text>
+        <text x="90" y="572" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">a lab, and a physical</text>
+        <text x="90" y="585" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">exam tool" (61).</text>
+      </g>
+
+      <!-- Q2: under The internet creates access -->
+      <g class="map-node" data-tip='"We are now seeing a transition from the doctor knows best paternalism that has characterized medicine for centuries to a more democratized, consumer-driven model" (63).'>
+        <rect x="178" y="464" width="174" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="265" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"We are now seeing a</text>
+        <text x="265" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">transition from the 'doctor</text>
+        <text x="265" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">knows best' paternalism</text>
+        <text x="265" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">that has characterized</text>
+        <text x="265" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">medicine for centuries to</text>
+        <text x="265" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">a more democratized,</text>
+        <text x="265" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">consumer-driven</text>
+        <text x="265" y="572" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">model" (63).</text>
+      </g>
+
+      <!-- Q3: under People are now empowered -->
+      <g class="map-node" data-tip='"By being able to monitor our own vital signs, glucose levels, and even our own DNA, we are moving from a reactive mode of medicine to one that is proactive and preemptive" (61).'>
+        <rect x="364" y="464" width="152" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="440" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"By being able to</text>
+        <text x="440" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">monitor our own vital</text>
+        <text x="440" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">signs, glucose levels,</text>
+        <text x="440" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">and even our own DNA,</text>
+        <text x="440" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">we are moving from a</text>
+        <text x="440" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">reactive mode of</text>
+        <text x="440" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">medicine to one that is</text>
+        <text x="440" y="572" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">proactive and</text>
+        <text x="440" y="585" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">preemptive" (61).</text>
+      </g>
+
+      <!-- Q4: under People require legal ownership -->
+      <g class="map-node" data-tip='"If we are to be truly emancipated, we must have the legal right to own our own medical data, just as we own our own money in the bank" (64).'>
+        <rect x="554" y="464" width="172" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="640" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"If we are to be truly</text>
+        <text x="640" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">emancipated, we must</text>
+        <text x="640" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">have the legal right to</text>
+        <text x="640" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">own our own medical</text>
+        <text x="640" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">data, just as we own</text>
+        <text x="640" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">our own money in</text>
+        <text x="640" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">the bank" (64).</text>
+      </g>
+
+      <!-- Q5: under Owning medical data -->
+      <g class="map-node" data-tip='"Data ownership is the key to ensuring that your medical history follows you, rather than being trapped in the silo of a single hospital or doctor&apos;s office" (64).'>
+        <rect x="738" y="464" width="154" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="815" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"Data ownership is the</text>
+        <text x="815" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">key to ensuring that</text>
+        <text x="815" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">your medical history</text>
+        <text x="815" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">follows you, rather than</text>
+        <text x="815" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">being trapped in the</text>
+        <text x="815" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">silo of a single hospital</text>
+        <text x="815" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">or doctor's office" (64).</text>
+      </g>
+
+      <!-- Q6: under Personal autonomy of medical data -->
+      <g class="map-node" data-tip='"Without ownership and control of our personal health information, we remain vulnerable to the interests of corporations and the state, rather than being the masters of our own health" (64).'>
+        <rect x="904" y="464" width="172" height="150" rx="1" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="990" y="481" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">"Without ownership and</text>
+        <text x="990" y="494" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">control of our personal</text>
+        <text x="990" y="507" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">health information, we</text>
+        <text x="990" y="520" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">remain vulnerable to the</text>
+        <text x="990" y="533" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">interests of corporations</text>
+        <text x="990" y="546" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">and the state, rather than</text>
+        <text x="990" y="559" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">being the masters of</text>
+        <text x="990" y="572" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="9" fill="#1a1610" font-style="italic">our own health" (64).</text>
+      </g>
+
+      <!-- LEGEND -->
+      <g transform="translate(14,628)">
+        <rect x="0" y="0" width="10" height="10" fill="#f7f3ec" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="16" y="9" font-family="'DM Mono',monospace" font-size="9" fill="#7a6e5f">Source / Theme</text>
+        <rect x="120" y="0" width="10" height="10" fill="#f0e8d8" stroke="#1a1610" stroke-width="1.5"/>
+        <text x="136" y="9" font-family="'DM Mono',monospace" font-size="9" fill="#7a6e5f">Question</text>
+        <rect x="216" y="0" width="10" height="10" fill="#faf8f4" stroke="#1a1610" stroke-width="1"/>
+        <text x="232" y="9" font-family="'DM Mono',monospace" font-size="9" fill="#7a6e5f">Supporting Claim</text>
+        <rect x="366" y="0" width="10" height="10" fill="#f0e8d8" stroke="#b8922a" stroke-width="1"/>
+        <text x="382" y="9" font-family="'DM Mono',monospace" font-size="9" fill="#7a6e5f">Textual Evidence</text>
+        <text x="510" y="9" font-family="'DM Mono',monospace" font-size="9" fill="#b8a898" font-style="italic">Hover any box for full text</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<div class="tooltip" id="tooltip"></div>
+
+<div class="section">
+  <div class="keys-grid reveal">
+    <div class="key-card">
+      <p class="key-card-title">Key Stakeholders</p>
+      <ul class="key-items">
+        <li><span class="num">01</span>Patients</li>
+        <li><span class="num">02</span>Doctors</li>
+        <li><span class="num">03</span>Corporations</li>
+      </ul>
+    </div>
+    <div class="key-card">
+      <p class="key-card-title">Key Concepts</p>
+      <ul class="key-items">
+        <li><span class="num">01</span>Autonomy</li>
+        <li><span class="num">02</span>Data Ownership</li>
+        <li><span class="num">03</span>Democratization</li>
+      </ul>
+    </div>
+  </div>
+  <div class="position-block reveal">
+    <p class="label">Author's Position — Claim / Argument</p>
+    <p>Eric Topal contends that technologically-enabled access to personal medical data empowers patients to actively participate in their own healthcare and challenge medical paternalism.</p>
+  </div>
+</div>
+
+<div class="importance-block reveal">
+  <h2>Why the Overarching Question Matters</h2>
+  <p>This issue is important because expanding access to personal medical data reshapes power, trust, and responsibility in healthcare, with major consequences for patient autonomy, health outcomes, privacy, and social equity.</p>
+</div>
+
+<section class="questions-section reveal">
+  <p class="section-label">Secondary Questions</p>
+  <h2 class="section-title" style="margin-bottom:0">Questions Raised by the Argument</h2>
+  <div class="q-grid">
+    <div class="q-card"><span class="q-num">01 — SECONDARY</span><p class="q-text">How can we ensure that people other than those that are tech-savvy will benefit from this?</p></div>
+    <div class="q-card"><span class="q-num">02 — SECONDARY</span><p class="q-text">If patients draw the wrong conclusions from their own medical data and are misinformed, who is responsible?</p></div>
+    <div class="q-card"><span class="q-num">03 — SECONDARY</span><p class="q-text">What authority does a doctor now assume in a world like this?</p></div>
+  </div>
+  <span class="q-section-label">Questions for Further Inquiry</span>
+  <div class="q-grid">
+    <div class="q-card"><span class="q-num">01 — FURTHER</span><p class="q-text">How does AI factor into this technologically-enabled patient dynamic?</p></div>
+    <div class="q-card"><span class="q-num">02 — FURTHER</span><p class="q-text">Will this actually broadly make people healthier?</p></div>
+    <div class="q-card"><span class="q-num">03 — FURTHER</span><p class="q-text">How will this affect what medical education looks like for people wanting to be doctors?</p></div>
+  </div>
+</section>
+
+<section class="summaries-section">
+  <div class="summaries-inner">
+    <p class="section-label">Summaries</p>
+    <h2 class="section-title" style="margin-bottom:0">One, Two &amp; Two+Quote Sentence Summaries</h2>
+    <div class="summary-tabs">
+      <button class="summary-tab active" data-tab="s1">One Sentence</button>
+      <button class="summary-tab" data-tab="s2">Two Sentences</button>
+      <button class="summary-tab" data-tab="s3">Two + Quote</button>
+    </div>
+    <div class="summary-panel active" id="s1"><p>Eric Topal's "The Emancipated Consumer" argues that advances in medical technology have permanently changed healthcare by enabling patients to independently collect, analyze, and act on their own health data, increasing autonomy and reducing dependence on medical professionals.</p></div>
+    <div class="summary-panel" id="s2"><p>Eric Topal's "The Emancipated Consumer" explores how technological advances in medicine empower patients with greater autonomy over their healthcare. He contends that access to personal medical data fundamentally reshapes the doctor–patient relationship by allowing patients to make informed decisions with less dependence on medical professionals.</p></div>
+    <div class="summary-panel" id="s3"><p>Eric Topal's "The Emancipated Consumer" explores various concepts regarding technologically-enabled patient autonomy in medicine. Topal contends that "We now have the formula for freedom" (60) and "the world of healthcare is irrevocably transformed" (62) detailing how patients alone can accumulate and analyze their own medical data, making informed decisions about their health without the need of a medical professional.</p></div>
+  </div>
+</section>
+
+<section class="concepts-section">
+  <p class="section-label">Written Discussion</p>
+  <h2 class="section-title">Key Concepts</h2>
+  <p class="concepts-full reveal">Eric Topal's "The Emancipated Consumer" focuses on the three key concepts of autonomy, data ownership, and democratization. Autonomy is discussed as the main shift in modern healthcare, where patients no longer need to be passive recipients of care but can take control of their care and be active participants. This shift is different from traditional medical paternalism because it now allows people to make informed decisions about their own health independently. Closely tied to this is data ownership, the idea that patients should have direct access to and control over their personal medical data. Topal argues that technologically-enabled access to this data provides a formula for freedom as patients can use smartphones and digital tools to monitor their own health. Finally, democratization describes the broader change of the health care system. By moving away from a model where doctors are the sole authorities, technology levels the playing field, making medical knowledge more accessible to the public. Together, these concepts suggest a future where the "emancipated consumer" uses digital tools to navigate their health with greater transparency, trust, and personal responsibility.</p>
+</section>
+
+<section class="frames-section">
+  <div class="frames-inner">
+    <p class="section-label">Frame-and-Explain</p>
+    <h2 class="section-title">Three Key Sentences from the Text</h2>
+    <div class="frame-item">
+      <div class="frame-letter">A</div>
+      <div class="frame-content"><p class="frame-analysis">Topal believes that with modern technology patients can now be more responsible for their own health claiming, "Being able to monitor our own vital signs, glucose levels, and even our own DNA, we are moving from a reactive mode of medicine to one that is proactive and preemptive" (61). These digital technological advancements enable patients to use smartphones to be the primary arbiter of their own health.</p></div>
+    </div>
+    <div class="frame-item">
+      <div class="frame-letter">B</div>
+      <div class="frame-content"><p class="frame-analysis">Topal holds to the idea that to fully liberate the consumer and empower them to be the arbiter of their own health, "We must have the legal right to own our own medical data, just as we own our own money in the bank" (64). To have transparency and accountability in their own care, people must have data ownership of their medical records.</p></div>
+    </div>
+    <div class="frame-item">
+      <div class="frame-letter">C</div>
+      <div class="frame-content"><p class="frame-analysis">Topal contends that the internet now creates unprecedented access to medical information and technology arguing "We are now seeing a transition from the 'doctor knows best' paternalism that has characterized medicine for centuries to a more democratized, consumer-driven model" (63). With patients having access to these resources, they are now given much higher authority to what they believe is best for their health.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid var(--line-strong);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;">
+  <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-faint);letter-spacing:0.1em;">THE EMANCIPATED CONSUMER — ARGUMENT MAP</span>
+  <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-faint);letter-spacing:0.1em;">ERIC TOPAL</span>
+</footer>
+
+<script>
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('.map-node').forEach(node => {
+  node.addEventListener('mouseenter', () => { const t = node.dataset.tip; if (!t) return; tooltip.textContent = t; tooltip.classList.add('visible'); });
+  node.addEventListener('mousemove', e => { tooltip.style.left = (e.clientX+16)+'px'; tooltip.style.top = (e.clientY-10)+'px'; });
+  node.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+});
+document.querySelectorAll('.summary-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.summary-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.summary-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i*80); obs.unobserve(e.target); } });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
